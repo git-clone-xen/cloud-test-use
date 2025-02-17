@@ -3,38 +3,17 @@ import React, { useState } from 'react';
 const App = () => {
   const [selectedFile, setSelectedFile] = useState(null);
 
-  const handleFileChange = (event) => {
-    const file = event.target.files[0];  // First selected file
-    const reader = new FileReader();
-    
-    reader.onloadend = () => {
-      const fileContent = reader.result.split(',')[1];  // Get base64 content (strip off the 'data:*/*;base64,' part)
-      
-      const formData = new FormData();
-      formData.append('content', fileContent);  // Append base64 content of the file
-      
-      // You can add other fields here (e.g., file name)
-      formData.append('file_name', file.name);
-      
-      fetch('YOUR_LAMBDA_API_URL', {
-        method: 'POST',
-        body: formData
-      })
-        .then(response => response.json())
-        .then(data => console.log('Success:', data))
-        .catch((error) => console.error('Error:', error));
-    };
-  
-    reader.readAsDataURL(file);  // Read the file as base64
+  const handleFileChange = (e) => {
+    const file = e.target.files[0];
+    setSelectedFile(file);
   };
-  
 
   const handleSubmit = async () => {
     if (!selectedFile) {
       alert('Please select a file first.');
       return;
     }
-
+    
     const formData = new FormData();
     formData.append('file', selectedFile);
 
