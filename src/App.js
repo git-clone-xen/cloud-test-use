@@ -8,22 +8,43 @@ const App = () => {
     setSelectedFile(file);
   };
 
+  const handleSubmit = async () => {
+    if (!selectedFile) {
+      alert('Please select a file first.');
+      return;
+    }
+
+    const formData = new FormData();
+    formData.append('file', selectedFile);
+
+    try {
+      const response = await fetch('https://your-api-endpoint.com/upload', {
+        method: 'POST',
+        body: formData,
+      });
+
+      if (response.ok) {
+        alert('File uploaded successfully!');
+      } else {
+        alert('File upload failed.');
+      }
+    } catch (error) {
+      alert('An error occurred during the upload.');
+      console.error(error);
+    }
+  };
+
   return (
     <div>
       <h1>Hello, It's my first React App!</h1>
       <h2>Happy Coding!!</h2>
 
-      <input 
-        type="file" 
-        accept="image/*, video/*" 
-        onChange={handleFileChange} 
+      <input
+        type="file"
+        accept="image/*, video/*"
+        onChange={handleFileChange}
       />
-      {selectedFile && (
-        <div>
-          <h3>Selected File:</h3>
-          <p>{selectedFile.name}</p>
-        </div>
-      )}
+      <button onClick={handleSubmit}>Submit</button>
     </div>
   );
 };
