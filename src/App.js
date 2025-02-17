@@ -18,7 +18,7 @@ const App = () => {
     formData.append('file', selectedFile);
 
     try {
-      const response = await fetch('https://qw16c0yk37.execute-api.us-east-1.amazonaws.com/test-stage/upload_data', {
+      const response = await fetch('https://qw16c0yk37.execute-api.us-east-1.amazonaws.com/test-stage/testing-uploader', {
         method: 'POST',
         body: formData,
       });
